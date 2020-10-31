@@ -1,0 +1,33 @@
+$bg: #2B2B2B;
+$color: #87939A;
+#left_bar{
+    background: $bg;
+    color: $color;
+    height: 100%;
+    .lb-list{
+        padding: 0;
+        margin: 1rem 0;
+        display: block;
+        width: 100%;
+        list-style: none;
+        .lb-list-item{
+            padding: .7rem;
+            background: darken($bg, 5);
+            border-top: 1px solid lighten($bg, 9);
+            border-bottom: 1px solid lighten($bg, 15);
+            transition: background-color 500ms;
+            &:hover{
+                background: darken($bg, 8);
+                transition: background-color 500ms;
+            }
+            .lb-link{
+                text-decoration: none;
+                color: inherit;
+                &:hover{
+                    text-decoration: none;
+                    color: inherit;
+                }
+            }
+        }
+    }
+}

@@ -44,4 +44,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Перевіряє користувача чи є він адміном
+     * @return bool
+     */
+    public function isAdmin():bool
+    {
+        return (int)$this->role === self::ROLE_ADMIN;
+    }
 }

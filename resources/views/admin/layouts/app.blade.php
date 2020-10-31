@@ -4,15 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="description" content="@yield('meta-description')">
-
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('text-title')</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('/public/js/app.js') }}" defer></script>
+
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -21,14 +18,14 @@
     <!-- Styles -->
 
 
-   @if (env('APP_DEBUG', false))
+    @if (env('APP_DEBUG', false))
         <link
-            href="{{ asset('/public/css/app.css').'?hash='. md5_file($_SERVER['DOCUMENT_ROOT'].'/public/css/app.css') }}"
+            href="{{ asset('/public/css/admin/app_admin.css').'?hash='. md5_file($_SERVER['DOCUMENT_ROOT'].'/public/css/admin/app_admin.css') }}"
             rel="stylesheet"
         >
     @else
         <link
-            href="{{ asset('/public/css/app.css') }}"
+            href="{{ asset('/public/css/admin/app_admin.css') }}"
             rel="stylesheet"
         >
     @endif
@@ -42,13 +39,29 @@
     @yield('style-section')
 </head>
 <body>
-    <div id="app">
-        @include('inc.nav')
-        @yield('alert')
-        <main class="py-4">
-            @yield('content')
-        </main>
+<div id="app">
+
+    @yield('alert')
+    <div class="container-fluid h-100">
+        <div class="row align-items-stretch">
+            <div class="col-lg-3" id="left_bar">
+                @include('admin.inc.nav')
+            </div>
+            <!-- /#left_bar.col-lg-3 -->
+            <div class="col-lg-9" id="content">
+                @include('admin.inc.alert')
+                @yield('content')
+            </div>
+            <!-- /#content.col-lg-9 -->
+        </div>
+        <!-- /.row-fluid -->
     </div>
+    <!-- /.container-fluid -->
+</div>
+
+<!-- Scripts -->
+<script src="{{ asset('/public/js/admin/app_admin.js') }}"></script>
+
 @yield('script-section')
 </body>
 </html>
