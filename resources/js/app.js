@@ -6,6 +6,8 @@
 
 require('./bootstrap');
 
+// require('./zoomsl');
+
 window.Vue = require('vue');
 
 /**
@@ -19,9 +21,20 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+
+// import Swiper JS
+import Swiper from 'swiper';
+// import Swiper styles
+import 'swiper/swiper-bundle.css';
+
+
+
+
 Vue.component('search-component', require('./components/SearchInput.vue').default);
 Vue.component('product-card', require('./components/ProductCard.vue').default);
 Vue.component('products-box', require('./components/ProductsBox.vue').default);
+Vue.component('order-form', require('./components/OrderForm.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

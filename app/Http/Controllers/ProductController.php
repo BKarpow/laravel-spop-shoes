@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ProductResource;
 use App\Models\ImageProduct;
+use App\Models\Price;
 use App\Models\Product;
 use App\Models\ProductAttribute;
 use Illuminate\Http\Request;
@@ -41,6 +42,11 @@ class ProductController extends Controller
         $Image = new ImageProduct();
         $Product = new Product();
         $Attribute = new ProductAttribute();
+        $Price = new Price();
+        $price_id = $Price->addNewPrice(
+            (float) $request->input('uan', 0.0),
+            (float) $request->input('uan_min', 0.0),
+        );
         $image_id = $Image->addNewImage(
             $request->input('main_image'),
             $request->input('image_a', ''),
@@ -54,7 +60,7 @@ class ProductController extends Controller
             $request->input('description', ''),
             $request->input('attributes','[]'),
             (int)$request->input('category_id', 1),
-            (int)$request->input('price_id', 1),
+            (int)$price_id,
             (int)$image_id
         );
         $Attribute->addAttributesFromProductAsJsonDump(

@@ -13,9 +13,9 @@ class Price extends Model
      * Створює нову ціну та поаертає люєкт зі властивістю id
      * @param float $price
      * @param float $min_price
-     * @return mixed
+     * @return int
      */
-    public function addNewPrice(float $price, float $min_price = 0.0)
+    public function addNewPrice(float $price, float $min_price = 0.0):int
     {
         $now = now();
         $uan_min = ($min_price) ? $min_price : $price;
@@ -25,12 +25,12 @@ class Price extends Model
             'created_at' => $now,
             'updated_at' => $now,
         ]);
-        return $this->select('id')
+        return (int) $this->select('id')
             ->where([
                 ['uan' ,'=', $price],
                 ['uan_min' ,'=', $uan_min,],
                 ['created_at' ,'=', $now,],
                 ['updated_at' ,'=', $now]
-            ])->first();
+            ])->first()->id;
     }
 }

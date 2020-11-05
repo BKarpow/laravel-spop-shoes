@@ -38,8 +38,14 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
     // TODO Помінять метод на пост
     Route::get('/ajax/attribute/all', [\App\Http\Controllers\ProductAttributeController::class, 'get_list_attributes']);
 
+    //Order
+    Route::post('/ajax/order/new', [\App\Http\Controllers\OrderController::class, 'ajax_create_order'])
+        ->name('ajax.order.new');
 
 //Product
+Route::get('/product/', function(){
+    return redirect('/');
+});
 Route::get('/product/{product_alias}', [\App\Http\Controllers\ProductController::class, 'show_product'])
     ->name('product.show');
 
@@ -78,4 +84,10 @@ Route::group([
         ->name('attribute.create.action');
     Route::get('/attribute/add/product', [\App\Http\Controllers\ProductAttributeController::class, 'add_attribute_from_product'])
         ->name('attribute.add.product');
+
+    //Orders
+    Route::get('/ajax/order/get/all/new', [\App\Http\Controllers\OrderController::class, 'ajax_get_all_new'])
+        ->name('admin.ajax.order.getAllNew');
+    Route::get('/order/{order_id}', [\App\Http\Controllers\OrderController::class, 'show_order'])
+        ->name('order.show');
 });

@@ -26,6 +26,9 @@ Vue.component('upload-block', require('./components/UploadBlock.vue').default)
 Vue.component('selector-category', require('./components/SelectorCategory.vue').default)
 Vue.component('attribute-component', require('./components/AttributeComponent.vue').default)
 Vue.component('add-attribute-from-product', require('./components/AddAttributeFromProduct.vue').default)
+Vue.component('info-block', require('./components/InfoBlock.vue').default)
+Vue.component('Orders', require('./components/IB/OrdersNew.vue').default)
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

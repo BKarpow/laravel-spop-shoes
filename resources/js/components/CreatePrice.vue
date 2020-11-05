@@ -10,27 +10,29 @@
             <!-- /.form-control -->
             <input
                 type="text"
-                class="form-control"
+                class="form-control mt-3"
                 placeholder="Ціна зі знижкою"
                 v-model="uan_min"
             >
             <!-- /.form-control -->
         </div>
-        <div class="form-group" v-if="showBlockInput">
-            <button @click="testPrice" type="button" class="btn btn-danger">Створити ціну</button>
-        </div>
-        <!-- /.form-group -->
-        <div
-            class="alert"
-            :class="{'alert-warning': error, 'alert-success': priceCreate}"
-            v-if="showBlockAlert"
-        >
-            <strong>
-                {{ alert }}
-            </strong>
-        </div>
-        <!-- /.alert -->
-        <input type="hidden" v-if="priceCreate" name="price_id" :value="priceId" >
+<!--        <div class="form-group" v-if="showBlockInput">-->
+<!--            <button @click="testPrice" type="button" class="btn btn-danger">Створити ціну</button>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; /.form-group &ndash;&gt;-->
+<!--        <div-->
+<!--            class="alert"-->
+<!--            :class="{'alert-warning': error, 'alert-success': priceCreate}"-->
+<!--            v-if="showBlockAlert"-->
+<!--        >-->
+<!--            <strong>-->
+<!--                {{ alert }}-->
+<!--            </strong>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; /.alert &ndash;&gt;-->
+<!--        <input type="hidden" v-if="priceCreate" name="price_id" :value="priceId" >-->
+        <input type="hidden" name="uan" :value="uan">
+        <input type="hidden" name="uan_min" :value="uan_min">
     </div>
     <!-- /#create_price -->
 </template>
