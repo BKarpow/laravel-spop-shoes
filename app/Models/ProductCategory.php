@@ -15,15 +15,23 @@ class ProductCategory extends Model
      * @param string $title
      * @param string $description
      * @param int $image_id
+     * @param int $parent_id
      * @return bool
      */
-    public function addNewCategory(string $title, string $description, int $image_id):bool
+    public function addNewCategory(string $title,
+                                   string $description,
+                                   int $image_id,
+                                    int $parent_id = 0
+    ):bool
     {
         $alias = $this->getAliasFromString($title);
         $this->title = $title;
         $this->alias = $alias;
         $this->description = $description;
         $this->image_id = $image_id;
+        if ($parent_id){
+            $this->parent_id = $parent_id;
+        }
         return (bool) $this->save();
     }
 }

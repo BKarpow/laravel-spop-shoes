@@ -33,6 +33,7 @@ import 'swiper/swiper-bundle.css';
 Vue.component('search-component', require('./components/SearchInput.vue').default);
 Vue.component('product-card', require('./components/ProductCard.vue').default);
 Vue.component('products-box', require('./components/ProductsBox.vue').default);
+Vue.component('popular-products-box', require('./components/PopularProductsBox.vue').default);
 Vue.component('order-form', require('./components/OrderForm.vue').default);
 
 

@@ -37,7 +37,6 @@ class Product extends Model
      * Метод створює новий товар в базі та повертає його ід
      * @param string $title
      * @param string $description
-     * @param string $attributes
      * @param int $category_id
      * @param int $price_id
      * @param int $image_id
@@ -45,7 +44,6 @@ class Product extends Model
      */
     public function addNewProduct(string $title,
                                   string $description,
-                                  string $attributes,
                                   int $category_id,
                                   int $price_id,
                                   int $image_id):int
@@ -56,9 +54,8 @@ class Product extends Model
                 'title' => $title,
                 'alias' => $this->getAliasFromString($title),
                 'description' => $description,
-                'categories_set' => json_encode([$category_id]),
+                'categories_id' => $category_id,
                 'price_id' => $price_id,
-                'attr' => $attributes,
                 'image_id' => $image_id,
                 'created_at' => $now,
                 'updated_at' => $now
@@ -78,11 +75,10 @@ class Product extends Model
 
     /**
      * Поаертає список товарів
-     * @param int $limit
-     * @param int $offset
-     * @return \Illuminate\Support\Collection
+     * @param int $per_page
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getNewProduct(int $limit, int $offset)
+    public function getNewProduct(int $per_page = 4)
     {
         return $this
             ->select('title', 'alias', 'description', 'main', 'image_a', 'image_b', 'image_c', 'attr',
@@ -93,9 +89,7 @@ class Product extends Model
             ->orderBy('created', 'DESC')
             ->leftJoin('prices', 'products.price_id', '=', 'prices.id')
             ->leftJoin('image_products', 'products.image_id', '=', 'image_products.id')
-            ->limit($limit)
-            ->offset($offset)
-            ->get();
+            ->paginate($per_page);
     }
 
     /**
@@ -105,6 +99,10 @@ class Product extends Model
      */
     public function getProductFromId(int $product_id):array
     {
+        $p = $this->where('id', $product_id)->first();
+        if ($p){
+            $p->increment('reviews');
+        }
         $res = (array)DB::table('products')
             ->select('title', 'alias', 'description', 'main', 'image_a', 'image_b', 'image_c', 'attr',
                 DB::raw('products.id as id'),
@@ -117,5 +115,24 @@ class Product extends Model
             ->where('products.id', $product_id)
             ->first();
         return $this->formatJsonArray( $res);
+    }
+
+    /**
+     * Повертає пагіновані сторінуи з популярними товарами
+     * @param int $count_products_from_page - кількість товарів на одні сторінці
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getPopularProducts(int $count_products_from_page = 4){
+        $res = DB::table('products')
+            ->leftJoin('image_products', 'products.image_id', '=', 'image_products.id')
+            ->leftJoin('prices', 'products.price_id', '=', 'prices.id')
+            ->select('title', 'alias', 'main',
+                DB::raw('products.id as id'),
+                DB::raw('categories_set->"$[0]" as category_id'),
+                DB::raw('products.created_at as created'),
+                DB::raw('prices.uan as price, prices.uan_min as price_min'))
+            ->orderBy('products.reviews', 'DESC')
+            ->paginate($count_products_from_page);
+        return $res;
     }
 }

@@ -42,8 +42,12 @@
     </li>
     <!-- /.lb-list-item -->
 
-    <li class="lb-list-item"><a href="" class="lb-link"></a>
-        <!-- /.lb-link --></li>
+    <li class="lb-list-item">
+        <a href="{{route('api.token.create')}}" class="lb-link">
+            <i class="fas fa-tape"></i> Створити новий API токен
+        </a>
+        <!-- /.lb-link -->
+    </li>
     <!-- /.lb-list-item -->
     <li class="lb-list-item"><a href="" class="lb-link"></a>
         <!-- /.lb-link --></li>

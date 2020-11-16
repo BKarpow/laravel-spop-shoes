@@ -28,6 +28,7 @@ Vue.component('attribute-component', require('./components/AttributeComponent.vu
 Vue.component('add-attribute-from-product', require('./components/AddAttributeFromProduct.vue').default)
 Vue.component('info-block', require('./components/InfoBlock.vue').default)
 Vue.component('Orders', require('./components/IB/OrdersNew.vue').default)
+Vue.component('token-table-list', require('./components/TokenTableList.vue').default)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

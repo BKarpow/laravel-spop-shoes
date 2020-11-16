@@ -5,12 +5,12 @@
 <!--            <img :src="image" class="card-img-top" :alt="title">-->
             <div class="card-body">
                 <h5 class="card-title"> <slot></slot> </h5>
-                <p class="card-text">{{description}}</p>
+                <p class="card-text">{{shortDesc}}</p>
                 <p class="product-price">
                     {{price}} {{currency}}
                 </p>
                 <!-- /.product-price -->
-                <a :href="link" class="btn btn-primary">Замовити</a>
+                <a :href="link+'.html'" class="btn btn-primary">Деталі</a>
             </div>
         </div>
     </div>
@@ -20,6 +20,22 @@
 <script>
     export default {
         props: ['image', 'price', 'currency', 'description', 'link'],
+        computed:{
+            shortTitle(){
+                let title = this.$slots.default[0].text.trim()
+                if (title.length > 21){
+                    title = title.slice(0, 19) + '...'
+                }
+                return title
+            },
+            shortDesc(){
+                let desc = ''
+                // if (this.$props.description){
+                //     desc = this.$props.description.slice(0, 32) + '...'
+                // }
+                return desc
+            }
+        },
         methods:{
             drawImage(src){
                 const can = this.$refs.can_img;

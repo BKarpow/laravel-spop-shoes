@@ -43,6 +43,21 @@
                     </div>
                     <!-- /.form-group -->
 
+                    <div class="form-group">
+                        <label for="parent_id">Обрати батьківську категорію</label>
+{{--                        <select name="parent_id" id="parent_id" class="form-control">--}}
+{{--                            <option value="0">Без батьків</option>--}}
+{{--                            @foreach($data_list as $item)--}}
+{{--                                <option value="{{$item['id']}}">{{$item['title']}}</option>--}}
+{{--                            @endforeach--}}
+{{--                        </select>--}}
+{{--                        <!-- /#.form-control -->--}}
+
+                        @category_tree($data_list)
+
+                    </div>
+                    <!-- /.form-group -->
+
                         <create-image-box :one-box="true"></create-image-box>
 
                     <div class="form-group">

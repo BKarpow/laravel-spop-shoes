@@ -17,3 +17,5 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/order/list', [\App\Http\Controllers\OrderController::class, 'ajax_get_all_new']);

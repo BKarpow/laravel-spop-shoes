@@ -58,7 +58,6 @@ class ProductController extends Controller
         $product_id = $Product->addNewProduct(
             $request->input('title', ''),
             $request->input('description', ''),
-            $request->input('attributes','[]'),
             (int)$request->input('category_id', 1),
             (int)$price_id,
             (int)$image_id
@@ -74,24 +73,15 @@ class ProductController extends Controller
 
     //Ajax
 
+    function ajax_popular_products(){
+        $Product = new Product();
+        return $Product->getPopularProducts();
+    }
+
     function ajax_get_new_product(Request $request)
     {
         $Product = new Product();
-        $res = $Product->getNewProduct(
-            (int)$request->input('limit' , 10),
-            (int)$request->input('offset', 0)
-        )->toArray();
-        $new = [];
-        foreach ($res as $re) {
-            if (isset($re['attr'])){
-                $re['attr'] = json_decode($re['attr'], true);
-            }
-            if (isset($re['description'])){
-                $re['description'] = strip_tags($re['description']);
-            }
-            $new[] = $re;
-        }
-        return response()->json(['data'=>$new]);
+        return new ProductResource($Product->getNewProduct());
     }
 
     function ajax_get_product($product_alias){

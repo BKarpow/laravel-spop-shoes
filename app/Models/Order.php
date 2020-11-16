@@ -10,6 +10,10 @@ class Order extends Model
 {
     use HasFactory;
 
+    const STATUS_NEW = 1;
+    const STATUS_PROCESS = 2;
+    const STATUS_SUCCESS = 3;
+
     /**
      * Створює новий запис замовлення та повертає його id
      * @param int $product_id
@@ -75,5 +79,55 @@ class Order extends Model
         $order->new = false;
         $order->save();
         return $order;
+    }
+
+    /**
+     * Статичний метод який інтерпритує код статусу замовлення
+     * @param int $status_code
+     * @return string
+     */
+    public static function getStatusString(int $status_code):string
+    {
+        switch ($status_code){
+            case self::STATUS_NEW:
+                return 'New order';
+                break;
+            case self::STATUS_PROCESS:
+                return 'Order in process';
+                break;
+            case self::STATUS_SUCCESS:
+                return 'Order success!';
+                break;
+            default:
+                return 'Error status order code';
+        }
+    }
+
+
+    /**
+     * Змінює статус замовлення
+     * @param int $order_id - ід замовлення
+     * @param string $status - new|process|success
+     * @return false
+     */
+    public function setStatus(int $order_id, string $status)
+    {
+        $status = strtolower(trim($status));
+        if ($status === 'new'){
+            $status_code = self::STATUS_NEW;
+        }elseif($status === 'process'){
+            $status_code = self::STATUS_PROCESS;
+        }elseif($status === 'success'){
+            $status_code = self::STATUS_SUCCESS;
+        }else{
+            $status_code = self::STATUS_NEW;
+        }
+        $ord = $this->where('id', $order_id)->first();
+        if ($ord){
+            $ord->status = $status_code;
+            return $ord->save();
+        }else{
+            return false;
+        }
     }
 }

@@ -16,7 +16,9 @@ class ProductCategoryController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     function create_category_page(){
-        return view('admin.pages.category.cu');
+        $Category = new ProductCategory();
+        $cat_list = $Category->select('id', 'title')->get();
+        return view('admin.pages.category.cu', ['data_list' => $cat_list]);
     }
 
     /**
@@ -27,8 +29,9 @@ class ProductCategoryController extends Controller
     function create_category_form_action(Request $request){
         $Image = new ImageProduct();
         $Category = new ProductCategory();
+        $parent_id = (int) $request->input('parent_id', 0);
         $image_id = $Image->addNewImage(
-            $request->input('main_image'),
+            $request->input('main_image', ''),
             $request->input('image_a', ''),
             $request->input('image_b', ''),
             $request->input('image_c', ''),
@@ -36,9 +39,10 @@ class ProductCategoryController extends Controller
             $request->input('image_e', ''),
         );
         $Category->addNewCategory(
-            $request->input('title'),
-            $request->input('description'),
-            (int)$image_id
+            $request->input('title', ''),
+            $request->input('description', ''),
+            (int)$image_id,
+            $parent_id
         );
         return redirect()
             ->route('category.create')
