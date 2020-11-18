@@ -7,6 +7,7 @@ use App\Models\ImageProduct;
 use App\Models\Price;
 use App\Models\Product;
 use App\Models\ProductAttribute;
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -30,7 +31,8 @@ class ProductController extends Controller
     function create_product_page()
     {
         $this->isAdminValidator();
-        return view('admin.pages.product.cu');
+        $cat = ProductCategory::select('id', 'parent_id', 'title')->get()->toArray();
+        return view('admin.pages.product.cu', ['category_list' => $cat]);
     }
 
     /**
@@ -58,7 +60,7 @@ class ProductController extends Controller
         $product_id = $Product->addNewProduct(
             $request->input('title', ''),
             $request->input('description', ''),
-            (int)$request->input('category_id', 1),
+            (int)$request->input('parent_id', 1),
             (int)$price_id,
             (int)$image_id
         );

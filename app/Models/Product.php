@@ -54,7 +54,7 @@ class Product extends Model
                 'title' => $title,
                 'alias' => $this->getAliasFromString($title),
                 'description' => $description,
-                'categories_id' => $category_id,
+                'category_id' => $category_id,
                 'price_id' => $price_id,
                 'image_id' => $image_id,
                 'created_at' => $now,
@@ -81,9 +81,9 @@ class Product extends Model
     public function getNewProduct(int $per_page = 4)
     {
         return $this
-            ->select('title', 'alias', 'description', 'main', 'image_a', 'image_b', 'image_c', 'attr',
+            ->select('title', 'alias', 'description', 'main', 'image_a', 'image_b', 'image_c',
                 DB::raw('products.id as id'),
-                DB::raw('categories_set->"$[0]" as category_id'),
+                DB::raw('category_id'),
                 DB::raw('products.created_at as created'),
                 DB::raw('prices.uan as price, prices.uan_min as price_min'))
             ->orderBy('created', 'DESC')
@@ -104,12 +104,19 @@ class Product extends Model
             $p->increment('reviews');
         }
         $res = (array)DB::table('products')
-            ->select('title', 'alias', 'description', 'main', 'image_a', 'image_b', 'image_c', 'attr',
+            ->select('main', 'image_a', 'image_b', 'image_c',
+                DB::raw('products.title as title'),
+                DB::raw('products.alias as alias'),
+                DB::raw('products.description as description'),
                 DB::raw('products.id as id'),
-                DB::raw('categories_set->"$[0]" as category_id'),
+                DB::raw('category_id'),
                 DB::raw('products.created_at as created'),
-                DB::raw('prices.uan as price, prices.uan_min as price_min'))
+                DB::raw('prices.uan as price, prices.uan_min as price_min'),
+                DB::raw('product_categories.title as category_title'),
+                DB::raw('product_categories.parent_id as category_parent'),
+            )
             ->orderBy('created', 'DESC')
+            ->leftJoin('product_categories', 'product_categories.id', '=','products.category_id')
             ->leftJoin('prices', 'products.price_id', '=', 'prices.id')
             ->leftJoin('image_products', 'products.image_id', '=', 'image_products.id')
             ->where('products.id', $product_id)
@@ -134,5 +141,32 @@ class Product extends Model
             ->orderBy('products.reviews', 'DESC')
             ->paginate($count_products_from_page);
         return $res;
+    }
+
+
+    /**
+     * Поаертає список товарів для категорії
+     * @param int $category_id
+     * @param ProductCategory $category
+     * @return mixed
+     */
+    public function getProductsFromCategory(int $category_id, ProductCategory $category)
+    {
+
+        $children = $category->getChildrenFromCategory($category_id);
+        if (empty($children)){
+            $children[] = [$category_id];
+        }
+        return $this
+            ->select('title', 'alias', 'description', 'main', 'image_a', 'image_b', 'image_c',
+                DB::raw('products.id as id'),
+                DB::raw('category_id'),
+                DB::raw('products.created_at as created'),
+                DB::raw('prices.uan as price, prices.uan_min as price_min'))
+            ->orderBy('created', 'DESC')
+            ->whereIn('category_id', $children)
+            ->leftJoin('prices', 'products.price_id', '=', 'prices.id')
+            ->leftJoin('image_products', 'products.image_id', '=', 'image_products.id')
+            ->paginate(env('PER_PAGE',  20));
     }
 }

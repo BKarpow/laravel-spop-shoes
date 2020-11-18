@@ -25,10 +25,19 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //Tree Category list
-        Blade::directive('category_tree', function($arr) {
-            dd(($arr));
-            $s_arr = sorted_tree_category((array)$arr);
-            return render_tree_selector($s_arr, 'parent_id', 'form-control');
+        Blade::directive('category', function($expresion) {
+            return "<?php
+            render_tree_selector( sorted_tree_category($expresion),
+              'parent_id', 'form-control', '|>>>', true);
+             ?>";
+
+        });
+
+        Blade::directive('category_parent', function($expresion) {
+            return "<?php
+            render_parent_category_selector( $expresion,
+              'parent_id', 'form-control', true);
+             ?>";
 
         });
     }

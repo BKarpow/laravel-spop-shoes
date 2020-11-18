@@ -53,7 +53,7 @@
 {{--                        </select>--}}
 {{--                        <!-- /#.form-control -->--}}
 
-                        @category_tree($data_list)
+                        @category_parent($data_list)
 
                     </div>
                     <!-- /.form-group -->

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\CategoryResource;
 use App\Models\ImageProduct;
+use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 
@@ -17,8 +18,8 @@ class ProductCategoryController extends Controller
      */
     function create_category_page(){
         $Category = new ProductCategory();
-        $cat_list = $Category->select('id', 'title')->get();
-        return view('admin.pages.category.cu', ['data_list' => $cat_list]);
+        $cat_list = $Category->select('id', 'parent_id', 'title')->get();
+        return view('admin.pages.category.cu', ['data_list' => $cat_list->toArray()]);
     }
 
     /**
@@ -49,6 +50,18 @@ class ProductCategoryController extends Controller
             ->with('status', 'Категорію додано');
     }
 
+    function show_products_from_category($category_id){
+        $id = intval($category_id);
+        if (!ProductCategory::checkCategoryExists($id)){
+            abort(404);
+        }
+        $Product = new Product();
+        $Cat = new ProductCategory();
+        $data = $Product->getProductsFromCategory($id, $Cat);
+        return view('pages.category.index',
+            ['data' => $data, 'children'=>$Cat->last_children_category]);
+    }
+
     //Ajax
 
     /**
@@ -59,4 +72,11 @@ class ProductCategoryController extends Controller
         $Category = new ProductCategory();
         return  new CategoryResource($Category->select('id', 'title')->get());
     }
+
+    function ajax_get_sorted_category(){
+        $Category = new ProductCategory();
+        return response()->json(['data'=>$Category->getCategorySortedArray()]);
+    }
+
+
 }

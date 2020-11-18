@@ -24,10 +24,19 @@
             <!-- /.col-md-6 -->
         </div>
         <!-- /.row -->
+
     </div>
     <!-- /.container -->
 </div>
 <!-- /#top-nav.container-fluid -->
+
+<div class="container my-2">
+    <div class="row">
+        <nav-bar-category></nav-bar-category>
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /.container my-2 -->
 
 {{--<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">--}}
 {{--    <div class="container">--}}
@@ -79,3 +88,5 @@
 {{--        </div>--}}
 {{--    </div>--}}
 {{--</nav>--}}
+
+

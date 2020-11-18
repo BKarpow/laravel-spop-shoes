@@ -28,6 +28,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //Ajax
     //Category
     Route::get('/ajax/category/all', [\App\Http\Controllers\ProductCategoryController::class, 'ajax_get_all_category']);
+    Route::get('/ajax/category/sorted', [\App\Http\Controllers\ProductCategoryController::class, 'ajax_get_sorted_category']);
 
     //Product
     // TODO Поміняти на метод пост
@@ -45,12 +46,22 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
     Route::post('/ajax/order/new', [\App\Http\Controllers\OrderController::class, 'ajax_create_order'])
         ->name('ajax.order.new');
 
+    //Likes
+    Route::post('/ajax/like/get/', [\App\Http\Controllers\LikeController::class, 'ajax_get_likes']);
+    Route::get('/ajax/like/{product_id}', [\App\Http\Controllers\LikeController::class, 'ajax_increment_like']);
+
+
 //Product
 Route::get('/product/', function(){
     return redirect('/');
 });
 Route::get('/product/{product_alias}', [\App\Http\Controllers\ProductController::class, 'show_product'])
     ->name('product.show');
+
+//Category
+Route::get('/catalog/{category_id}', [\App\Http\Controllers\ProductCategoryController::class, 'show_products_from_category'])
+    ->name('category.show');
+
 
 
 Route::group([

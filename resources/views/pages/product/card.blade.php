@@ -158,11 +158,16 @@
             </div>
             <!-- /#image.col-md-4 -->
             <div class="col-md-8" id="productInfo">
+                <span class="category-tree">
+                  Категорія:  {{$data['category_title']}}
+                </span>
+                <!-- /.category-tree -->
                 <h2>{{$data['title']}}</h2>
                 <p class="price">
                     Ціна {{$data['price']}} грн.
                 </p>
                 <!-- /.price -->
+                <like-box product-id="{{$data['id']}}" auth="{{auth()->check()}}"></like-box>
                 <div class="order-form">
                     <order-form product-id="{{$data['id']}}"></order-form>
                 </div>

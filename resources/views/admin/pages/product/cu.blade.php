@@ -79,9 +79,7 @@
 
                     <create-image-box></create-image-box>
 
-                    <selector-category
-{{--                        default-category-id="1"--}}
-                    ></selector-category>
+                    @category($category_list)
 
 {{--                    <attribute-component></attribute-component>--}}
 
