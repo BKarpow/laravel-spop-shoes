@@ -13,11 +13,14 @@
 
                 <search-component></search-component>
                 <span class="icon-min">
-                    <i class="fas fa-shopping-cart"></i>
+{{--                    <i class="fas fa-shopping-cart"></i>--}}
+
                 </span>
                 <!-- /.icon-min -->
-                <span class="icon-min">
-                    <i class="fas fa-user"></i>
+                <span class="icon-min" title="{{__('My likes')}}">
+                    <a href="{{route('likes.my')}}">
+                    <i class="fas fa-heart"></i>
+                        </a>
                 </span>
                 <!-- /.icon-min -->
             </div>
@@ -33,6 +36,14 @@
 <div class="container my-2">
     <div class="row">
         <nav-bar-category></nav-bar-category>
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col py-4">
+            <h1>Cart</h1>
+            <cart></cart>
+        </div>
+        <!-- /.col py-4 -->
     </div>
     <!-- /.row -->
 </div>

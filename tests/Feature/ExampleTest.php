@@ -14,7 +14,7 @@ class ExampleTest extends TestCase
      */
     public function testBasicTest()
     {
-        $response = $this->get('/ajax/category/sorted');
+        $response = $this->get('/my/likes');
 
         $response->assertStatus(200);
     }

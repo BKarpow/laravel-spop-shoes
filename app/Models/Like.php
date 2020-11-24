@@ -55,9 +55,9 @@ class Like extends Model
     {
         $this->product_id = $this->set_product_id;
         if ($dislike){
-            $this->dislikes = 1;
+            $this->dislikes = 0;
         }else{
-            $this->likes = 1;
+            $this->likes = 0;
         }
         $this->save();
         return $this->getLike();
@@ -89,12 +89,26 @@ class Like extends Model
     }
 
     /**
-     * Перевіряє чи користувач ставив лайк
-     * @return bool
+     * Видаляє реляцію з бази
+     * @return int
+     */
+    private function removeRelation()
+    {
+        return DB::table($this->rel_table)
+            ->where([
+                ['user_id', '=', $this->user_id],
+                ['like_id', '=', $this->like_id]
+            ])
+            ->delete();
+    }
+
+    /**
+     * Перевіряє чи користувач ставив лайк,якшо так то повертає реляцію
+     * @return mixed
      */
     private function checkRelation()
     {
-        return (bool) DB::table($this->rel_table)
+        return DB::table($this->rel_table)
             ->where([
                 ['user_id', '=', $this->user_id],
                 ['like_id', '=', $this->like_id]
@@ -111,7 +125,7 @@ class Like extends Model
     {
         $like = $this->getLike();
         if ($like){
-            if (!$this->checkRelation()){
+            if (!(bool)$this->checkRelation()){
                 $like->increment(($dislike) ? 'dislikes' : 'likes');
                 $this->addRelationUserLike($dislike);
                 return true;
@@ -126,6 +140,39 @@ class Like extends Model
         }
     }
 
+    /**
+     * Відміняє лайк чи диздайк користувача
+     * @param bool $dislike
+     * @return bool
+     */
+    public function like_minus($dislike = false)
+    {
+        $like = $this->getLike();
+        $rel = $this->checkRelation();
+        if ($rel){
+            $this->removeRelation();
+            $like->decrement(($dislike) ? 'dislikes' : 'likes');
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Перевіряє чи користувач ставив лайк
+     * @return bool
+     */
+    public function isLiked()
+    {
+        $this->getLike();
+        return (bool) DB::table($this->rel_table)
+            ->where([
+                ['user_id', '=', $this->user_id],
+                ['like_id', '=', $this->like_id]
+            ])
+            ->first();
+
+    }
+
 
     /**
      * Поаертає кількість лайків та дилайків
@@ -135,5 +182,27 @@ class Like extends Model
     {
         return $this->where('product_id', $this->set_product_id)->first();
     }
+
+
+    /**
+     * Поаертає товари які лайкнув користувач
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getLikeProducts()
+    {
+        return DB::table($this->rel_table)
+            ->select(
+                DB::raw('products.id as pid, products.title as title, prices.uan as price'),
+                DB::raw('products.alias as alias, image_products.main as image')
+            )
+            ->rightJoin('likes', $this->rel_table.'.like_id', '=', 'likes.id')
+            ->rightJoin('products', 'products.id', '=', 'likes.product_id')
+            ->rightJoin('prices', 'products.price_id', '=', 'prices.id')
+            ->rightJoin('image_products', 'products.image_id', '=', 'image_products.id')
+            ->where('user_id', $this->user_id)->paginate(env('PER_PAGE', 15));
+
+    }
+
+
 
 }

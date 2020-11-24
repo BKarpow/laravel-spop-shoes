@@ -37,6 +37,7 @@ Vue.component('popular-products-box', require('./components/PopularProductsBox.v
 Vue.component('order-form', require('./components/OrderForm.vue').default);
 Vue.component('nav-bar-category', require('./components/NavBarCategory.vue').default);
 Vue.component('like-box', require('./components/LikeBox.vue').default);
+Vue.component('cart', require('./components/CartModal.vue').default);
 
 
 /**

@@ -101,3 +101,20 @@ function render_parent_category_selector(array $array,
     return  $render_html;
 }
 
+/**
+ * Формує посилання на товар
+ * @param int $product_id
+ * @param string $format
+ * @param string $prefix
+ * @return string|string[]
+ */
+function product_link(int $product_id,
+                      string $format = '{id}-{alias}.htnl',
+                      string $prefix = '/product/')
+{
+    $Product = new \App\Models\Product();
+    $product = $Product->getProductFromId($product_id);
+    $link = str_replace(['{id}', '{alias}'], [$product['id'], $product['alias']], $format);
+    return $prefix . $link;
+}
+

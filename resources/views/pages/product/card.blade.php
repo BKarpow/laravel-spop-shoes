@@ -167,11 +167,17 @@
                     Ціна {{$data['price']}} грн.
                 </p>
                 <!-- /.price -->
-                <like-box product-id="{{$data['id']}}" auth="{{auth()->check()}}"></like-box>
+
                 <div class="order-form">
                     <order-form product-id="{{$data['id']}}"></order-form>
                 </div>
                 <!-- /.order-form -->
+                <div class="like-box">
+                    <like-box product-id="{{$data['id']}}" auth="{{(int)auth()->check()}}">
+                        {{__('Likes: ')}}
+                    </like-box>
+                </div>
+                <!-- /.like-box -->
                 <div class="product-attributes">
 {{--                    <h4>Параметри товару</h4>--}}
 {{--                    <ul class="list-group">--}}
