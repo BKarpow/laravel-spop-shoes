@@ -1,5 +1,19 @@
 <?php
 
+/**
+ * Повертає рядок meta з OpenGraph
+ * @param string $key - attr name
+ * @param string $value - attr content
+ * @return string
+ */
+function getOpenGraph(string $key, string $value):string
+{
+    $value = preg_replace('#[\"\'\>\<\/]#si', '', strip_tags(trim($value)));
+    $key = preg_replace('#[\"\'\>\<\/\s]#si', '', strip_tags(trim($key)));
+    $meta = '<meta name="og:{key}" content="{value}" />'.PHP_EOL;
+    return str_replace(['{key}', '{value}'], [$key, $value], $meta);
+}
+
 
 /**
  * Функція рендер яка малює селектор категорій по масиву який було відформатовано за допомогою sorted_tree_category

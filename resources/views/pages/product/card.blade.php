@@ -2,7 +2,10 @@
 
 @section('text-title') {{$data['title']}} @endsection
 
-@section('meta-description') {{substr( strip_tags($data['description']), 0, 200)  }}@endsection
+@section('meta-description'){{substr( strip_tags($data['description']), 0, 200)  }}@endsection
+@section('meta-title'){{substr(strip_tags($data['title']), 0, 200)}}@endsection
+@section('meta-image'){{asset( $data['main'])}}@endsection
+@section('meta-url'){{product_link((int)$data['id'], true)}}@endsection
 
 @section('style-section')
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
@@ -234,6 +237,13 @@
                 <!-- /.product-description -->
             </div>
             <!-- /.col-md-11 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-md-10">
+                @include('inc.comments.comments')
+            </div>
+            <!-- /.col-md-10 -->
         </div>
         <!-- /.row -->
     </div>

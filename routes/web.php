@@ -80,6 +80,10 @@ Route::get('/product/', function(){
 Route::get('/product/{product_alias}', [\App\Http\Controllers\ProductController::class, 'show_product'])
     ->name('product.show');
 
+//Comment
+Route::post('/comment/new', [\App\Http\Controllers\CommentController::class, 'new_comment'])
+    ->name('comment.new');
+
 //Likes
 Route::get('/my/likes', [\App\Http\Controllers\LikeController::class, 'page_likes'])
     ->name('likes.my');

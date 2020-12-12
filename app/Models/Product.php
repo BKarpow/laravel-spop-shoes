@@ -12,6 +12,15 @@ class Product extends Model
     use HasFactory, TextToolTrait;
 
     /**
+     *
+     * Получить комментарии статьи блога.
+     */
+    public function comments()
+    {
+        return $this->hasMany('App\Models\Comment');
+    }
+
+    /**
      * Фориує коректний масив для відправки в json форматі
      * @param array $data
      * @return array

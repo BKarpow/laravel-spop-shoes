@@ -122,4 +122,10 @@ class Cart extends Model
             ])
             ->first();
     }
+
+    public function order()
+    {
+        return $this->belongsTo('App\Models\CartOrder');
+    }
+
 }

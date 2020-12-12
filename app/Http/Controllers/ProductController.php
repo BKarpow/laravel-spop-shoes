@@ -106,9 +106,11 @@ class ProductController extends Controller
         $Attribute = new ProductAttribute();
         $attr = $Attribute->getAttributesFromProductId($product_id);
         $data = $Product->getProductFromId($product_id);
+        $comments = Product::find($product_id)->comments()
+            ->orderBy('created_at', 'DESC')->paginate(25);
         if (empty($data)){
             abort(404);
         }
-        return view('pages.product.card', ['data' => $data, 'attr_g' => $attr]);
+        return view('pages.product.card', ['data' => $data, 'attr_g' => $attr, 'comments'=>$comments]);
     }
 }

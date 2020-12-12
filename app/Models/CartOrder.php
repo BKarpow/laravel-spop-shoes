@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class CartOrder extends Model
 {
     use HasFactory;
+
+    function cart()
+    {
+        return $this->hasOne('App\Models\Cart', 'cart_id');
+    }
 }

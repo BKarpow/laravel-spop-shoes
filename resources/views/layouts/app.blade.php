@@ -9,6 +9,17 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <!-- OpenGraph -->
+    {!!   getOpenGraph('locale', 'uk_UA') !!}
+    {!!   getOpenGraph('type', 'website') !!}
+    {!!   getOpenGraph('site_name', env('APP_NAME', '')) !!}
+    <meta name="og:title" content="@yield('text-title')">
+    <meta name="og:description" content="@yield('meta-description')">
+    <meta name="og:image" content="@yield('meta-image')">
+    <meta name="og:url" content="@yield('meta-url')">
+
+
+
     <title>@yield('text-title')</title>
 
     <!-- Scripts -->
