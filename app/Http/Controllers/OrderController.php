@@ -13,6 +13,14 @@ class OrderController extends Controller
         $Order = new Order();
         $product_id = $request->input('product_id', false);
         if ($product_id){
+            if (auth()->check()){
+                // Add number phone from register user
+                if (!auth()->user()->userContact){
+                    auth()->user()->userContact()->create([
+                        'phone' => $request->input('phone')
+                    ]);
+                }
+            }
             $order_id = $Order->addNewOrder(
                 (int) $product_id,
                 $request->input('phone'),

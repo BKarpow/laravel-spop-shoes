@@ -41,11 +41,12 @@
                 const can = this.$refs.can_img;
                 const ctx = can.getContext('2d')
                 const image = new Image()
-                can.height = 300/2
+                const div = 1.4
+                can.height = 300/div
                 can.width = 300
                 image.onload = function(){
                     // TODO Фориуда розрахунку ширини зображення
-                    ctx.drawImage(image, 0, 0, 300, 300/2)
+                    ctx.drawImage(image, 0, 0, 300, 300/div)
                 }
                 image.src = src
             },

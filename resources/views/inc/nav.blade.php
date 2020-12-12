@@ -41,7 +41,7 @@
     <div class="row">
         <div class="col py-4">
             <h1>Cart</h1>
-            <cart></cart>
+            <cart @cart-product-remove="removeFromCart" ref="cart"></cart>
         </div>
         <!-- /.col py-4 -->
     </div>

@@ -169,12 +169,29 @@
                 <!-- /.price -->
 
                 <div class="order-form">
-                    <order-form product-id="{{$data['id']}}"></order-form>
+                    <order-form
+                        product-id="{{$data['id']}}"
+                        @if (auth()->check() && auth()->user()->userContact)
+                            user-phone="{{auth()->user()->userContact->phone}}"
+                            @endif
+                    ></order-form>
                 </div>
                 <!-- /.order-form -->
+                <div class="add-to-cart-form my-2">
+                    <add-to-cart
+                        ref="add"
+                        @trigger="incrementTriggerCart" product-id="{{$data['id']}}"
+                        @if (!auth()->check())
+                            auth="0"
+                        @else
+                            auth="1"
+                            @endif
+                    ></add-to-cart>
+                </div>
+                <!-- /.add-to-cart-form -->
                 <div class="like-box">
                     <like-box product-id="{{$data['id']}}" auth="{{(int)auth()->check()}}">
-                        {{__('Likes: ')}}
+                        {{__('Додати в улюблене: ')}}
                     </like-box>
                 </div>
                 <!-- /.like-box -->

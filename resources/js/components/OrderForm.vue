@@ -57,7 +57,7 @@
 
     }
     export default {
-        props: ['productId'],
+        props: ['productId','userPhone'],
         data(){
             return {
                 phone: '',
@@ -108,6 +108,11 @@
         watch:{
             phone(){
                 this.phone = this.phone.replace(config.watchFilterPhone, config.watchFilterReplace)
+            }
+        },
+        mounted() {
+            if (this.$props.userPhone.length){
+                this.phone = this.$props.userPhone
             }
         }
     }

@@ -18,7 +18,11 @@ Route::get('/', [\App\Http\Controllers\IndexController::class, 'main_page'])
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/h', function (){
+    dd(auth()->user()->userContact);
+    return 'ok';
+})
+    ->name('home');
 
 Auth::routes();
 
@@ -62,6 +66,8 @@ Route::group([
     //Cart
     Route::post('/cart/get', [\App\Http\Controllers\CartController::class, 'ajax_get_products_from_cart']);
     Route::post('/cart/add', [\App\Http\Controllers\CartController::class, 'ajax_add_to_cart']);
+    Route::post('/cart/remove', [\App\Http\Controllers\CartController::class, 'ajax_remove_product_cart']);
+    Route::post('/cart/check', [\App\Http\Controllers\CartController::class, 'ajax_check_product_from_cart']);
 });
 
 

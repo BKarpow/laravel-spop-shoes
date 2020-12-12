@@ -41,6 +41,7 @@ class Order extends Model
                 'updated_at' => $now,
                 'created_at' => $now
             ]);
+        send_order_telegram($phone, $product_id);
         return (int) DB::table('orders')
             ->select('id')
             ->where([

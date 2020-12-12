@@ -2,6 +2,8 @@
     <div id="cartRoot">
         <div id="cart-icon">
             <a href="" data-toggle="modal" data-target="#cart-body">
+<!--                <div class="text-cart-title">Мій кошик</div>-->
+                <!-- /.text-cart-title -->
             <i class="fas fa-shopping-cart"></i>
             <!-- /.fas fa-cart -->
             <span class="all-price">{{fullPrice}}</span>
@@ -34,7 +36,9 @@
 
                                         <h5>Цына {{item.price}}</h5>
                                     </p>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    <button type="button" @click="removeProduct(item.pid)" class="btn btn-danger">
+                                        Видалити з кошика
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -55,15 +59,23 @@ const conf = {
     currency: ' грн.',
     urls:{
         getCart:'/ajax/cart/get',
+        remove:'/ajax/cart/remove',
     },
 }
 export default {
+    props: ['trigger'],
     data(){
         return {
+            trig: this.$props.trigger,
             allPrice: 0,
             currency: conf.currency,
             dataCartFull: {},
             dataCartItems: []
+        }
+    },
+    watch:{
+        trig(){
+            this.fetchCart()
         }
     },
     computed:{
@@ -83,18 +95,37 @@ export default {
             })
         },
         sumAllPrice(){
+            let sum = 0
             if (this.dataCartItems.length){
-                let sum = 0
                 this.dataCartItems.forEach(item => {
                     if (item.price){
                         sum += Number(item.price)
                     }
                 })
-                this.allPrice = sum
             }
+            this.allPrice = sum
+        },
+        removeProduct(product_id){
+            axios.post(conf.urls.remove, {pid: product_id}).then(resp => {
+                const res = resp.data.data.delete
+                if (res){
+                    this.dataCartItems = this.dataCartItems.filter(i => {
+                        if (i.pid === product_id){
+                            return false
+                        }else{
+                            return true
+                        }
+                    })
+                    this.sumAllPrice()
+                    this.$emit('cart-product-remove', product_id)
+                }
+            }).catch(err => {console.error(err)})
         }
     },
     mounted() {
+        this.$on('trigger', ()=>{
+            console.log('Trigger on!!!')
+        })
         this.fetchCart()
     }
 

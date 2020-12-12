@@ -104,17 +104,53 @@ function render_parent_category_selector(array $array,
 /**
  * Формує посилання на товар
  * @param int $product_id
+ * @param bool $full_link
  * @param string $format
  * @param string $prefix
  * @return string|string[]
  */
 function product_link(int $product_id,
+                      bool $full_link = false,
                       string $format = '{id}-{alias}.htnl',
                       string $prefix = '/product/')
 {
     $Product = new \App\Models\Product();
     $product = $Product->getProductFromId($product_id);
     $link = str_replace(['{id}', '{alias}'], [$product['id'], $product['alias']], $format);
-    return $prefix . $link;
+    return ($full_link) ? asset($prefix . $link) : $prefix . $link;
 }
 
+
+/**
+ * Выдправляє повідомлення в телеграм.
+ * @param string $text
+ * @return false|mixed
+ */
+function send_to_telegram(string $text)
+{
+    $token = env('TELEGRAM_TOKEN', false);
+    $chat_id = env('TELEGRAM_CHAT_ID', false);
+    $text = strip_tags(trim($text));
+    if ($token && $chat_id){
+        $telegram = new Telegram($token);
+        return $telegram->sendMessage(['chat_id'=>$chat_id,'text'=>$text]);
+    }else{
+        return false;
+    }
+}
+
+
+/**
+ * Відправля готовий шаблон замовлення в телеграм
+ * @param string $phone
+ * @param int $product_id
+ */
+function send_order_telegram(string $phone, int $product_id)
+{
+    //todo фільтрувати номер по простому
+    $phone = preg_replace('#[^\d]#si', '', $phone);
+    $tel_text = "Замовлено товар".PHP_EOL;
+    $tel_text .= "Телефон: ".$phone.PHP_EOL;
+    $tel_text .= product_link($product_id, true);
+    send_to_telegram($tel_text);
+}

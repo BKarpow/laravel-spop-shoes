@@ -6,11 +6,13 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
     const ROLE_ADMIN = 13;
     const ROLE_USER = 7;
+    const INFO_TABLE = 'users_info';
     use HasFactory, Notifiable;
 
     /**
@@ -53,4 +55,14 @@ class User extends Authenticatable
     {
         return (int)$this->role === self::ROLE_ADMIN;
     }
+
+
+    /**
+     * Получить запись с номером телефона пользователя.
+     */
+    public function userContact()
+    {
+        return $this->hasOne('App\Models\UserContact', 'user_id');
+    }
+
 }

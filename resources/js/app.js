@@ -38,6 +38,7 @@ Vue.component('order-form', require('./components/OrderForm.vue').default);
 Vue.component('nav-bar-category', require('./components/NavBarCategory.vue').default);
 Vue.component('like-box', require('./components/LikeBox.vue').default);
 Vue.component('cart', require('./components/CartModal.vue').default);
+Vue.component('add-to-cart', require('./components/AddToCartButton.vue').default);
 
 
 /**
@@ -48,4 +49,15 @@ Vue.component('cart', require('./components/CartModal.vue').default);
 
 const app = new Vue({
     el: '#app',
+    data:{
+        triggerCart: 0
+    },
+    methods:{
+        incrementTriggerCart(){
+            this.$refs.cart.fetchCart()
+        },
+        removeFromCart(pid){
+            this.$refs.add.rmFromCart(pid)
+        }
+    }
 });
