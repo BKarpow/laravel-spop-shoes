@@ -39,6 +39,7 @@ Vue.component('nav-bar-category', require('./components/NavBarCategory.vue').def
 Vue.component('like-box', require('./components/LikeBox.vue').default);
 Vue.component('cart', require('./components/CartModal.vue').default);
 Vue.component('add-to-cart', require('./components/AddToCartButton.vue').default);
+Vue.component('np-field', require('./components/NovaPoshtaSelector.vue').default);
 
 
 /**

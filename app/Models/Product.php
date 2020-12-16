@@ -178,4 +178,12 @@ class Product extends Model
             ->leftJoin('image_products', 'products.image_id', '=', 'image_products.id')
             ->paginate(env('PER_PAGE',  20));
     }
+
+    public function price(){
+        return $this->hasOne('App\Models\Price', 'id', 'price_id');
+    }
+
+    public function image(){
+        return $this->hasOne('App\Models\ImageProduct', 'id', 'image_id');
+    }
 }

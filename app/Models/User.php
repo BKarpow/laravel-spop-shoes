@@ -65,4 +65,8 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\UserContact', 'user_id');
     }
 
+    public function cart(){
+        return $this->hasOne('App\Models\Cart');
+    }
+
 }

@@ -55,6 +55,8 @@ Route::group([
     //Order
     Route::post('/order/new', [\App\Http\Controllers\OrderController::class, 'ajax_create_order'])
         ->name('ajax.order.new');
+    Route::get('/cart/products', [\App\Http\Controllers\CartOrderController::class, 'ajax_all_products']);
+
 
     //Likes
     Route::post('/like/get/', [\App\Http\Controllers\LikeController::class, 'ajax_get_likes']);
@@ -68,6 +70,12 @@ Route::group([
     Route::post('/cart/add', [\App\Http\Controllers\CartController::class, 'ajax_add_to_cart']);
     Route::post('/cart/remove', [\App\Http\Controllers\CartController::class, 'ajax_remove_product_cart']);
     Route::post('/cart/check', [\App\Http\Controllers\CartController::class, 'ajax_check_product_from_cart']);
+
+    //NovaPoshta
+    Route::get('/np/regions', [\App\Http\Controllers\NPController::class, 'ajax_regions']);
+    Route::post('/np/city', [\App\Http\Controllers\NPController::class, 'ajax_city_from_area']);
+    Route::post('/np/city/branch', [\App\Http\Controllers\NPController::class, 'ajax_get_branch']);
+    Route::post('/np/calc/', [\App\Http\Controllers\NPController::class, 'ajax_calc_cost']);
 });
 
 
@@ -91,6 +99,10 @@ Route::get('/my/likes', [\App\Http\Controllers\LikeController::class, 'page_like
 //Category
 Route::get('/catalog/{category_id}', [\App\Http\Controllers\ProductCategoryController::class, 'show_products_from_category'])
     ->name('category.show');
+
+//Order
+Route::get('/order/delivery', [\App\Http\Controllers\CartOrderController::class, 'index'])
+    ->name('delivery');
 
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ProductsCart;
 use App\Traits\TracingGeoIp;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-
+        dd(ProductsCart::all());
         return view('home');
     }
 }

@@ -44,7 +44,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
-                            <button type="button" class="btn btn-primary">Купити {{fullPrice}}</button>
+                            <a href="/order/delivery" class="btn btn-primary">Купити {{fullPrice}}</a>
                         </div>
                     </div>
                 </div>

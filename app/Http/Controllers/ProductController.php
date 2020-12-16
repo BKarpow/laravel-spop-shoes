@@ -111,6 +111,8 @@ class ProductController extends Controller
         if (empty($data)){
             abort(404);
         }
-        return view('pages.product.card', ['data' => $data, 'attr_g' => $attr, 'comments'=>$comments]);
+        return view('pages.product.card', ['data' => $data,
+            'attr_g' => $attr,
+            'comments'=>$comments]);
     }
 }

@@ -128,4 +128,8 @@ class Cart extends Model
         return $this->belongsTo('App\Models\CartOrder');
     }
 
+    public function products(){
+        return $this->hasMany('App\Models\ProductsCart', 'cart_id');
+    }
+
 }
