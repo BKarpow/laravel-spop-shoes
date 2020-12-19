@@ -3,17 +3,19 @@
         <div class="row">
             <div class="col-md-6">
                 <ul class="list-inline my-3">
-                    <li class="list-inline-item">Контакти</li>
+                    <li class="list-inline-item">
+                        <a href="{{route('page.about')}}">Контакти</a>
+                    </li>
                     <li class="list-inline-item">Карта сайту</li>
-                    <li class="list-inline-item"> Популярні</li>
+                    <li class="list-inline-item">Популярні</li>
                 </ul>
             </div>
             <!-- /.col-md-6 -->
             <div class="col-md-6 my-1 d-flex align-items-center" style="flex-direction: row-reverse;">
 
                 <search-component></search-component>
-                <span class="icon-min">
-{{--                    <i class="fas fa-shopping-cart"></i>--}}
+                <span class="icon-cart">
+                    <cart @cart-product-remove="removeFromCart" ref="cart"></cart>
 
                 </span>
                 <!-- /.icon-min -->
@@ -36,14 +38,6 @@
 <div class="container my-2">
     <div class="row">
         <nav-bar-category></nav-bar-category>
-    </div>
-    <!-- /.row -->
-    <div class="row">
-        <div class="col py-4">
-            <h1>Cart</h1>
-            <cart @cart-product-remove="removeFromCart" ref="cart"></cart>
-        </div>
-        <!-- /.col py-4 -->
     </div>
     <!-- /.row -->
 </div>

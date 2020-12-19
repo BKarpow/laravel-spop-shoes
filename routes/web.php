@@ -78,10 +78,16 @@ Route::group([
     Route::post('/np/calc/', [\App\Http\Controllers\NPController::class, 'ajax_calc_cost']);
     Route::post('/np/pay/', [\App\Http\Controllers\NPInfoController::class, 'ajax_save_data']);
     Route::post('/np/data/', [\App\Http\Controllers\NPInfoController::class, 'ajax_get_data']);
+
+
+    //Search
+    Route::post('/search', [\App\Http\Controllers\SearchController::class, 'ajax_search']);
 });
 
 
-
+//Pages
+Route::get('/about', [\App\Http\Controllers\PageController::class, 'about'])
+    ->name('page.about');
 
 //Product
 Route::get('/product/', function(){

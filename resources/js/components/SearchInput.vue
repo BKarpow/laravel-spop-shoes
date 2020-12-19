@@ -18,6 +18,7 @@
         data(){
             return {
                 search: '',
+                results: []
             }
         },
         mounted() {
@@ -31,9 +32,16 @@
         methods:{
             searchGo(){
                 console.log('search', this.search)
+                this.fetchSearchResult()
             },
             focusField(){
                 console.log('Focus field')
+            },
+
+            fetchSearchResult(){
+                axios.post('/ajax/search', {q: this.search}).then(r=>{
+                    this.results = r.data
+                })
             }
         }
     }

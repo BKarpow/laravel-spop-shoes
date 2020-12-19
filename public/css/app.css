@@ -10930,6 +10930,17 @@ body {
   cursor: pointer;
 }
 
+.icon-cart {
+  display: block;
+  margin-left: 0.5rem;
+  color: black;
+  background: #ffffff;
+  border-radius: 9px;
+  padding-left: 0.7rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
 .price {
   font-size: 2rem;
   font-weight: bold;

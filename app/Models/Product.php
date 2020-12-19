@@ -6,10 +6,23 @@ use App\Traits\TextToolTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Laravel\Scout\Searchable;
 
 class Product extends Model
 {
-    use HasFactory, TextToolTrait;
+    use HasFactory, TextToolTrait, Searchable;
+
+
+    public function searchableAs()
+    {
+        return 'products_index';
+    }
+
+    public function search(string $query)
+    {
+        return $this->whereRaw('MATCH (title,description) AGAINST ("'.$query.'")')
+            ->get();
+    }
 
     /**
      *

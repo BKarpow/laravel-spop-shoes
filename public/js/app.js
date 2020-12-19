@@ -3058,7 +3058,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      search: ''
+      search: '',
+      results: []
     };
   },
   mounted: function mounted() {
@@ -3072,9 +3073,19 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     searchGo: function searchGo() {
       console.log('search', this.search);
+      this.fetchSearchResult();
     },
     focusField: function focusField() {
       console.log('Focus field');
+    },
+    fetchSearchResult: function fetchSearchResult() {
+      var _this = this;
+
+      axios.post('/ajax/search', {
+        q: this.search
+      }).then(function (r) {
+        _this.results = r.data;
+      });
     }
   }
 });
@@ -7521,7 +7532,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\na[data-v-4c9baf12] {\n  color: inherit;\n  text-decoration: none;\n}\na[data-v-4c9baf12]:hover {\n  color: inherit;\n  text-decoration: none;\n}\na i[data-v-4c9baf12] {\n  font-size: 2rem;\n}\na span[data-v-4c9baf12] {\n  margin-right: 2rem;\n  font-size: 2rem;\n}\na span[data-v-4c9baf12]:before {\n  content: \"\\A0\\A0\";\n}", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\na[data-v-4c9baf12] {\n  color: blueviolet;\n  text-decoration: none;\n}\na[data-v-4c9baf12]:hover {\n  color: inherit;\n  text-decoration: none;\n}\na i[data-v-4c9baf12] {\n  font-size: 1rem;\n}\na span[data-v-4c9baf12] {\n  border-radius: 9px;\n  margin-right: 2rem;\n  font-size: 1rem;\n}\na span[data-v-4c9baf12]:before {\n  content: \"\\A0\\A0\";\n}", ""]);
 
 // exports
 

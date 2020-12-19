@@ -564,3 +564,13 @@ u043e\u0440"}}
 
 {"apiKey":"2f35c9fe0bd23fc5af2f4b4028b74fa6","modelName":"InternetDocument","calledMethod":"getDocumentPrice","methodProperties":{"CitySender":"06f87986-4079-11de-b509-001d92f78698","CityRecipient":"db5c8980-391c-11dd-90d9-001a92567626","Weight":0.5,"Cost":850,"SeatsAmount":"1","CargoType":"Cargo","ServiceType":"DoorsDoors"}}
 
+{"apiKey":"2f35c9fe0bd23fc5af2f4b4028b74fa6","modelName":"InternetDocument","calledMethod":"getDocumentPrice","methodProperties":{"CitySender":"06f87986-4079-11de-b509-001d92f78698","CityRecipient":"db5c8980-391c-11dd-90d9-001a92567626","Weight":0.5,"Cost":850,"SeatsAmount":"1","CargoType":"Cargo","ServiceType":"DoorsDoors"}}
+
+{"apiKey":"2f35c9fe0bd23fc5af2f4b4028b74fa6","modelName":"InternetDocument","calledMethod":"getDocumentPrice","methodProperties":{"CitySender":"06f87986-4079-11de-b509-001d92f78698","CityRecipient":"db5c8980-391c-11dd-90d9-001a92567626","Weight":0.5,"Cost":850,"SeatsAmount":"1","CargoType":"Cargo","ServiceType":"DoorsDoors"}}
+
+{"apiKey":"2f35c9fe0bd23fc5af2f4b4028b74fa6","modelName":"InternetDocument","calledMethod":"getDocumentPrice","methodProperties":{"CitySender":"06f87986-4079-11de-b509-001d92f78698","CityRecipient":"db5c8980-391c-11dd-90d9-001a92567626","Weight":0.5,"Cost":850,"SeatsAmount":"1","CargoType":"Cargo","ServiceType":"DoorsDoors"}}
+
+{"apiKey":"2f35c9fe0bd23fc5af2f4b4028b74fa6","modelName":"InternetDocument","calledMethod":"getDocumentPrice","methodProperties":{"CitySender":"06f87986-4079-11de-b509-001d92f78698","CityRecipient":"db5c8980-391c-11dd-90d9-001a92567626","Weight":0.5,"Cost":850,"SeatsAmount":"1","CargoType":"Cargo","ServiceType":"DoorsDoors"}}
+
+{"apiKey":"2f35c9fe0bd23fc5af2f4b4028b74fa6","modelName":"InternetDocument","calledMethod":"getDocumentPrice","methodProperties":{"CitySender":"06f87986-4079-11de-b509-001d92f78698","CityRecipient":"db5c8980-391c-11dd-90d9-001a92567626","Weight":0.5,"Cost":850,"SeatsAmount":"1","CargoType":"Cargo","ServiceType":"DoorsDoors"}}
+

@@ -9,6 +9,21 @@ namespace App\Traits;
 trait TextToolTrait{
 
     /**
+     * Фільтрує рядок, обмежує рядок до 40 символів!
+     * @param string $value
+     * @return string
+     */
+    private function scoped_string(string $value):string
+    {
+        $value = strip_tags($value);
+        $value = preg_replace('#[^\sa-z0-9А-Яa-яіІїЇєЄ]#si', '', $value);
+        $value = htmlspecialchars($value);
+        $value = trim($value);
+        $value = substr($value, 0, 40);
+        return $value;
+    }
+
+    /**
      * Роботь транслітерацію рядка, яка підхожить для аліасів
      * @param string $str
      * @return string

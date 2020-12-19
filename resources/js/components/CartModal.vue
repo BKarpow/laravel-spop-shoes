@@ -133,9 +133,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$fontIconSize: 2rem;
+$fontIconSize: 1rem;
 a{
-    color: inherit;
+    color: blueviolet;
     text-decoration: none;
     &:hover{
         color: inherit;
@@ -145,6 +145,7 @@ a{
         font-size: $fontIconSize;
     }
     span{
+        border-radius: 9px;
         margin-right: 2rem;
         font-size: $fontIconSize;
         &:before{
