@@ -2484,8 +2484,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['phoneUser', 'firstName', 'familyName'],
+  props: ['phoneUser', 'firstName', 'familyName', 'productPrice', 'defaultCity', 'defaultCityRef', 'defaultBranch'],
   data: function data() {
     return {
       name: this.$props.firstName,
@@ -2501,7 +2504,8 @@ __webpack_require__.r(__webpack_exports__);
       branches: [],
       price: 0,
       cost: 0,
-      products: []
+      products: [],
+      user: []
     };
   },
   computed: {
@@ -2606,14 +2610,64 @@ __webpack_require__.r(__webpack_exports__);
 
       return true;
     },
-    submit: function submit() {
-      console.log(JSON.stringify(this));
+    fetchUserData: function fetchUserData() {
+      var _this5 = this;
 
-      if (this.checkData()) {}
+      axios.post('/ajax/np/data').then(function (r) {
+        _this5.user = r.data;
+
+        if (_this5.user.length) {
+          _this5.block1 = false;
+          _this5.block2 = false;
+          _this5.block3 = true;
+          _this5.selectCity.Description = _this5.user[0][0].city_string;
+          _this5.selectCity.Ref = _this5.user[0][0].city_ref;
+          _this5.selectBranch.Description = _this5.user[0][0].delivery_string;
+          _this5.name = _this5.user[0][0].first_name;
+          _this5.family = _this5.user[0][0].family_name;
+          _this5.phone = _this5.user[0][0].phone;
+
+          _this5.calcCost();
+        }
+      });
+    },
+    getData: function getData() {
+      return {
+        products: this.products,
+        city: this.selectCity.SettlementTypeDescription + ', ' + this.selectCity.Description + ', ' + this.selectCity.AreaDescription,
+        cityRef: this.selectCity.Ref,
+        branch: this.selectBranch.Description,
+        firstName: this.name,
+        familyName: this.family,
+        phone: this.phone,
+        cost: this.cost.Cost
+      };
+    },
+    newInfo: function newInfo() {
+      this.user = [];
+      this.block1 = true;
+      this.block2 = false;
+      this.block3 = false;
+    },
+    submit: function submit() {
+      console.log('Submit', this.getData());
+      axios.post('/ajax/np/pay', this.getData()).then(function (r) {
+        console.log(r.data);
+      });
     }
   },
   mounted: function mounted() {
     this.getProducts();
+    this.fetchUserData();
+
+    if (this.$props.defaultCity && this.$props.defaultBranch && this.phone && this.name) {
+      this.block1 = false;
+      this.block2 = false;
+      this.block3 = true;
+      this.selectCity.Description = this.$props.defaultCity;
+      this.selectCity.Ref = this.$props.defaultCityRef;
+      this.calcCost();
+    }
   }
 });
 
@@ -51959,6 +52013,22 @@ var render = function() {
         _vm._v(" "),
         _vm.block3
           ? _c("div", { staticClass: "form-group" }, [
+              _vm.user.length
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-info my-2",
+                      attrs: { type: "button" },
+                      on: { click: _vm.newInfo }
+                    },
+                    [
+                      _vm._v(
+                        "\n                Оновити реквізити доставки\n            "
+                      )
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
               _c(
                 "button",
                 {

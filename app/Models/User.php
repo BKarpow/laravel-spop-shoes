@@ -69,4 +69,9 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\Cart');
     }
 
+    function npInfo()
+    {
+        return $this->hasOne('App\Models\NPInfo');
+    }
+
 }

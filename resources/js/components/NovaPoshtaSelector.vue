@@ -135,6 +135,9 @@
         <input type="hidden" name="np_cost" :value="costName">
 
             <div class="form-group" v-if="block3">
+                <button v-if="user.length" type="button" @click="newInfo" class="btn btn-info my-2">
+                    Оновити реквізити доставки
+                </button>
                 <button type="button" @click="submit" class="btn btn-success byn-block py-2">
                     Перейти до оплати {{price+cost.Cost}} грн.
                 </button>
@@ -148,7 +151,14 @@
 
 <script>
 export default {
-    props: ['phoneUser', 'firstName', 'familyName'],
+    props: ['phoneUser',
+        'firstName',
+        'familyName',
+        'productPrice',
+        'defaultCity',
+        'defaultCityRef',
+        'defaultBranch',
+    ],
     data(){
         return {
             name: this.$props.firstName,
@@ -164,7 +174,8 @@ export default {
             branches: [],
             price: 0,
             cost: 0,
-            products: []
+            products: [],
+            user: []
         }
     },
     computed:{
@@ -271,15 +282,70 @@ export default {
             return true
         },
 
-        submit(){
-            console.log(JSON.stringify(this))
-            if (this.checkData()){
+        fetchUserData(){
+            axios.post('/ajax/np/data').then(r => {
+                this.user = r.data
+                if (this.user.length){
+                    this.block1 = false
+                    this.block2 = false
+                    this.block3 = true
+                    this.selectCity.Description = this.user[0][0].city_string
+                    this.selectCity.Ref = this.user[0][0].city_ref
+                    this.selectBranch.Description = this.user[0][0].delivery_string
+                    this.name = this.user[0][0].first_name
+                    this.family = this.user[0][0].family_name
+                    this.phone = this.user[0][0].phone
+                    this.calcCost()
+                }
+            })
+
+        },
+
+        getData(){
+            return {
+                products: this.products,
+                city: this.selectCity.SettlementTypeDescription +', '
+                    +this.selectCity.Description+', '
+                    +this.selectCity.AreaDescription,
+                cityRef: this.selectCity.Ref,
+                branch: this.selectBranch.Description,
+                firstName: this.name,
+                familyName: this.family,
+                phone: this.phone,
+                cost: this.cost.Cost,
 
             }
+        },
+
+        newInfo(){
+            this.user = []
+            this.block1 = true
+            this.block2 = false
+            this.block3 = false
+        },
+
+        submit(){
+            console.log('Submit', this.getData())
+            axios.post('/ajax/np/pay', this.getData()).then(r => {
+                console.log(r.data)
+            })
         }
     },
     mounted() {
         this.getProducts()
+        this.fetchUserData()
+        if (this.$props.defaultCity &&
+            this.$props.defaultBranch &&
+            this.phone &&
+            this.name
+        ){
+            this.block1 = false
+            this.block2 = false
+            this.block3 = true
+            this.selectCity.Description = this.$props.defaultCity
+            this.selectCity.Ref = this.$props.defaultCityRef
+            this.calcCost()
+        }
     }
 
 }

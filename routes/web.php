@@ -76,6 +76,8 @@ Route::group([
     Route::post('/np/city', [\App\Http\Controllers\NPController::class, 'ajax_city_from_area']);
     Route::post('/np/city/branch', [\App\Http\Controllers\NPController::class, 'ajax_get_branch']);
     Route::post('/np/calc/', [\App\Http\Controllers\NPController::class, 'ajax_calc_cost']);
+    Route::post('/np/pay/', [\App\Http\Controllers\NPInfoController::class, 'ajax_save_data']);
+    Route::post('/np/data/', [\App\Http\Controllers\NPInfoController::class, 'ajax_get_data']);
 });
 
 
