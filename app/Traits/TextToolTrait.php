@@ -15,6 +15,8 @@ trait TextToolTrait{
      */
     private function scoped_string(string $value):string
     {
+        $value = urldecode($value);
+        $value = str_replace(['+'], [' '], $value);
         $value = strip_tags($value);
         $value = preg_replace('#[^\sa-z0-9А-Яa-яіІїЇєЄ]#si', '', $value);
         $value = htmlspecialchars($value);

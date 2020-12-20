@@ -21,7 +21,7 @@ class Product extends Model
     public function search(string $query)
     {
         return $this->whereRaw('MATCH (title,description) AGAINST ("'.$query.'")')
-            ->get();
+            ->paginate(env('PER_PAGE', 15));
     }
 
     /**

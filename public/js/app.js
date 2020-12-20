@@ -3072,8 +3072,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     searchGo: function searchGo() {
-      console.log('search', this.search);
+      var q = this.search.replace(' ', '+');
       this.fetchSearchResult();
+      window.location.href = '/search/?q=' + q;
     },
     focusField: function focusField() {
       console.log('Focus field');

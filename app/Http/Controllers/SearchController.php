@@ -17,4 +17,11 @@ class SearchController extends Controller
         $q = $this->scoped_string($q);
         return response()->json( $p->search($q)->toArray());
     }
+
+    function page_search_result(Request $request){
+        $p = new Product();
+        $q = $request->input('q', '');
+        $q = $this->scoped_string($q);
+        return view('pages.search', ['data'=>$p->search($q), 'word' =>$q]);
+    }
 }

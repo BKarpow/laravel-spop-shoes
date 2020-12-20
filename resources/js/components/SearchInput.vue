@@ -31,8 +31,9 @@
         },
         methods:{
             searchGo(){
-                console.log('search', this.search)
+                const q = this.search.replace(' ', '+')
                 this.fetchSearchResult()
+                window.location.href = '/search/?q=' + q
             },
             focusField(){
                 console.log('Focus field')

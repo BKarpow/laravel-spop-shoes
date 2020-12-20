@@ -85,6 +85,11 @@ Route::group([
 });
 
 
+//Search
+Route::get('/search/', [\App\Http\Controllers\SearchController::class, 'page_search_result'])
+    ->name('search');
+
+
 //Pages
 Route::get('/about', [\App\Http\Controllers\PageController::class, 'about'])
     ->name('page.about');
