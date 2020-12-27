@@ -6,3 +6,18 @@
     </div>
     <!-- /.alert my-3 -->
 @endif
+
+@if($errors->any())
+    <div class="alert alert-danger my-2">
+        <ul>
+            @foreach($errors as $error)
+                <li>
+                    <strong>
+                        {{$error}}
+                    </strong>
+                </li>
+                @endforeach
+        </ul>
+    </div>
+    <!-- /.alert -->
+@endif

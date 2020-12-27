@@ -85,6 +85,15 @@ Route::group([
 });
 
 
+//Sitemap
+Route::get('/sitemap/product', [\App\Http\Controllers\SitemapController::class, 'products'])
+    ->name('sitemap.product');
+Route::get('/sitemap/category', [\App\Http\Controllers\SitemapController::class, 'category'])
+    ->name('sitemap.category');
+Route::get('/sitemap', [\App\Http\Controllers\SitemapController::class, 'index'])
+    ->name('sitemap');
+
+
 //Search
 Route::get('/search/', [\App\Http\Controllers\SearchController::class, 'page_search_result'])
     ->name('search');
@@ -93,6 +102,8 @@ Route::get('/search/', [\App\Http\Controllers\SearchController::class, 'page_sea
 //Pages
 Route::get('/about', [\App\Http\Controllers\PageController::class, 'about'])
     ->name('page.about');
+Route::post('/feedback/', [\App\Http\Controllers\FeedbackController::class, 'create'])
+    ->name('feedback.action');
 
 //Product
 Route::get('/product/', function(){
@@ -116,6 +127,9 @@ Route::get('/catalog/{category_id}', [\App\Http\Controllers\ProductCategoryContr
 //Order
 Route::get('/order/delivery', [\App\Http\Controllers\CartOrderController::class, 'index'])
     ->name('delivery');
+Route::get('/order/success/', [\App\Http\Controllers\OrderSetController::class, 'success']);
+Route::post('/order/new', [\App\Http\Controllers\OrderSetController::class, 'create'])
+    ->name('order,new');
 
 
 
@@ -175,4 +189,19 @@ Route::group([
         ->name('admin.ajax.order.getAllNew');
     Route::get('/order/{order_id}', [\App\Http\Controllers\OrderController::class, 'show_order'])
         ->name('order.show');
+
+    // Statuses
+    Route::get('/statuses', [\App\Http\Controllers\OrderStatusController::class, 'index'])
+        ->name('statuses');
+    Route::get('/statuses/create', [\App\Http\Controllers\OrderStatusController::class, 'create'])
+        ->name('statuses.create');
+    Route::post('/statuses/create/action', [\App\Http\Controllers\OrderStatusController::class, 'create_action'])
+        ->name('statuses.create.action');
+    Route::get('/statuses/update/{status_id}', [\App\Http\Controllers\OrderStatusController::class, 'update'])
+        ->name('statuses.update');
+    Route::post('/statuses/update/action', [\App\Http\Controllers\OrderStatusController::class, 'update_action'])
+        ->name('statuses.update.action');
+    Route::get('/statuses/delete/{status_id}', [\App\Http\Controllers\OrderStatusController::class, 'delete'])
+        ->name('statuses.delete');
 });
+

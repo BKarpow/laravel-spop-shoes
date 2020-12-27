@@ -125,7 +125,7 @@ function render_parent_category_selector(array $array,
  */
 function product_link(int $product_id,
                       bool $full_link = false,
-                      string $format = '{id}-{alias}.htnl',
+                      string $format = '{id}-{alias}.html',
                       string $prefix = '/product/')
 {
     $Product = new \App\Models\Product();

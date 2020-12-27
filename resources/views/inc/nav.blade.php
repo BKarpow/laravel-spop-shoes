@@ -6,7 +6,9 @@
                     <li class="list-inline-item">
                         <a href="{{route('page.about')}}">Контакти</a>
                     </li>
-                    <li class="list-inline-item">Карта сайту</li>
+                    <li class="list-inline-item">
+                        <a href="{{route('sitemap')}}">Карта сайту</a>
+                    </li>
                     <li class="list-inline-item">Популярні</li>
                 </ul>
             </div>

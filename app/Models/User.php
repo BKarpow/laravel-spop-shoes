@@ -74,4 +74,8 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\NPInfo');
     }
 
+    function order(){
+        return $this->hasOne('App\Models\FullOrders');
+    }
+
 }

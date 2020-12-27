@@ -24,6 +24,8 @@ class Product extends Model
             ->paginate(env('PER_PAGE', 15));
     }
 
+
+
     /**
      *
      * Получить комментарии статьи блога.

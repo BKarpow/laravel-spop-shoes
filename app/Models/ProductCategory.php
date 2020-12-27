@@ -100,4 +100,10 @@ class ProductCategory extends Model
             ->get()->toArray();
         return sorted_tree_category($res);
     }
+
+
+    function path()
+    {
+        return '/catalog/'.$this->id.'-'.$this->alias.'.html';
+    }
 }

@@ -49,8 +49,13 @@
         <!-- /.lb-link -->
     </li>
     <!-- /.lb-list-item -->
-    <li class="lb-list-item"><a href="" class="lb-link"></a>
-        <!-- /.lb-link --></li>
+    <li class="lb-list-item">
+        <a href="{{route('statuses')}}" class="lb-link">
+            <i class="fas fa-sort"></i>
+            Статуси замовлень
+        </a>
+        <!-- /.lb-link -->
+    </li>
     <!-- /.lb-list-item -->
 </ul>
 <!-- /.lb-list -->

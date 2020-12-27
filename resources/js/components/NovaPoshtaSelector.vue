@@ -135,13 +135,40 @@
         <input type="hidden" name="np_cost" :value="costName">
 
             <div class="form-group" v-if="block3">
+                <h4 >Оберіть спосіб оплати</h4>
+                <div class="form-check form-check">
+                    <input class="form-check-input"
+                           type="radio"
+                           v-model="typeOfPayment"
+                           name="inlineRadioOptions"
+                           id="inlineRadio1"
+                           value="np_pay">
+                    <label class="form-check-label" for="inlineRadio1">Накладений платіж (Нова пошта +20грн до суми)</label>
+                </div>
+                <div class="form-check form-check">
+                    <input class="form-check-input"
+                           type="radio"
+                           v-model="typeOfPayment"
+                           name="inlineRadioOptions"
+                           id="inlineRadio2"
+                           value="bank_pay">
+                    <label class="form-check-label" for="inlineRadio2">Переказ на карту</label>
+                </div>
+            </div>
+            <!-- /.form-group -->
+
+            <div class="form-group btn-group" v-if="block3">
                 <button v-if="user.length" type="button" @click="newInfo" class="btn btn-info my-2">
                     Оновити реквізити доставки
                 </button>
-                <button type="button" @click="submit" class="btn btn-success byn-block py-2">
+                <button
+                    type="button"
+                    @click="submit"
+                    class="btn btn-success byn-block py-2">
                     Перейти до оплати {{price+cost.Cost}} грн.
                 </button>
                 <!-- /.btn -->
+
             </div>
             <!-- /.form-group -->
         </form>
@@ -175,7 +202,9 @@ export default {
             price: 0,
             cost: 0,
             products: [],
-            user: []
+            user: [],
+            typeOfPayment: '',
+            npPayPrice: 0,
         }
     },
     computed:{
@@ -185,6 +214,7 @@ export default {
                 price += Number(i.price)
             })
             this.price = price
+            this.price += this.npPayPrice
             return price + 'грн.'
         },
 
@@ -201,6 +231,13 @@ export default {
         }
     },
     watch:{
+        typeOfPayment(){
+            if (this.typeOfPayment === 'np_pay'){
+                this.npPayPrice = 20
+            }else{
+                this.npPayPrice = 0
+            }
+        },
         searchCity(){
             if (this.searchCity.length > 3){
                 this.getCity()
@@ -313,6 +350,7 @@ export default {
                 familyName: this.family,
                 phone: this.phone,
                 cost: this.cost.Cost,
+                typeOfPayment: this.typeOfPayment,
 
             }
         },
@@ -326,8 +364,10 @@ export default {
 
         submit(){
             console.log('Submit', this.getData())
-            axios.post('/ajax/np/pay', this.getData()).then(r => {
-                console.log(r.data)
+            axios.post('/order/new', this.getData()).then(r => {
+                if (r.data.ok){
+                    window.location. href = r.data.redirect
+                }
             })
         }
     },
