@@ -12,6 +12,16 @@ class Product extends Model
 {
     use HasFactory, TextToolTrait, Searchable;
 
+    /**
+     * Повертає форматований рядок для посилання на товар
+     * @param string $prefix
+     * @param string $sufix
+     * @return string
+     */
+    public function path(string $prefix = '/product/', string $sufix = '.html'):string
+    {
+        return $prefix.$this->id.'-'.$this->alias.$sufix;
+    }
 
     public function searchableAs()
     {

@@ -62,3 +62,15 @@ const app = new Vue({
         }
     }
 });
+
+
+const slideout = new Slideout({
+    'panel': document.getElementById('app'),
+    'menu': document.getElementById('menu'),
+    'padding': 256,
+    'tolerance': 70
+});
+
+document.querySelector('.menu-toggle').addEventListener('click', function() {
+    slideout.toggle();
+});

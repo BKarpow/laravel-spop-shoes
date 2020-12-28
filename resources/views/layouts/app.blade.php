@@ -53,13 +53,64 @@
     @yield('style-section')
 </head>
 <body>
-    <div id="app">
+    <nav id="menu">
         @include('inc.nav')
+    </nav>
+    <!-- /#menu -->
+    <div id="app">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2 py-2">
+                    <button class="btn btn-outline-dark btn-lg menu-toggle">
+                        <i class="fas fa-bars"></i>
+                        Меню
+                    </button>
+                    <!-- /.btn -->
+                </div>
+                <!-- /.col-md-2 py-2 -->
+                <div class="col-md-4 py-2">
+                    <div class="btn-group">
+                        <a href="{{route('likes.my')}}" class="btn btn-outline-primary btn-lg">
+                            <i class="fas fa-heart"></i>
+                        </a>
+                        <cart @cart-product-remove="removeFromCart" ref="cart"></cart>
+                        <!-- /.btn -->
+                    </div>
+                    <!-- /.btn-group -->
+                </div>
+                <!-- /.col-md-4 py-2 -->
+                <div class="col-md-4 py-2">
+                    <search-component></search-component>
+                </div>
+                <!-- /.col-md-4 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+
+        <div class="container my-2">
+            <div class="row">
+                <nav-bar-category></nav-bar-category>
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container my-2 -->
+
         @yield('alert')
         <main class="py-4">
             @yield('content')
         </main>
     </div>
 @yield('script-section')
+    <script>
+
+    </script>
 </body>
 </html>
+<script>
+    import CartModal from "../../js/components/CartModal";
+    export default {
+        components: {CartModal}
+    }
+</script>

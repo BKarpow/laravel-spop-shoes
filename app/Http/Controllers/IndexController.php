@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -11,6 +12,7 @@ class IndexController extends Controller
      */
     // TODO Настройка головної сторінки
     function main_page(){
-        return view('index');
+
+        return view('index', ['data' => Product::orderBy('created_at', 'desc')->paginate(15)]);
     }
 }

@@ -56,11 +56,17 @@ class OrderSetController extends Controller
         $order->price_product = $this->calcAllSum($request->products);
         $order->save();
         $user->cart()->delete();
-
+        send_to_telegram('Створено нове замовлення через корзину, перейдіть в адмін-панель. ІД замовлення '.$order->id);
         return response()->json(['ok'=>true, 'redirect' => '/order/success']);
     }
 
-    function success(){
-        return view('pages.order.success');
+    function success(Request $request){
+        $request->header('referer','/');
+        if(url('/order/delivery') == request()->headers->get('referer')){
+            return view('pages.order.success');
+        }else{
+            abort(404);
+        }
+
     }
 }

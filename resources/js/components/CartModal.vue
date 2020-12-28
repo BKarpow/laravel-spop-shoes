@@ -1,7 +1,7 @@
 <template>
     <div id="cartRoot">
         <div id="cart-icon">
-            <a href="" data-toggle="modal" data-target="#cart-body">
+            <a href="/order/delivery"  class="btn btn-outline-success btn-lg" >
 <!--                <div class="text-cart-title">Мій кошик</div>-->
                 <!-- /.text-cart-title -->
             <i class="fas fa-shopping-cart"></i>
@@ -120,6 +120,9 @@ export default {
                     this.$emit('cart-product-remove', product_id)
                 }
             }).catch(err => {console.error(err)})
+        },
+        goCart(){
+            window.location.href = '/cart/delivery'
         }
     },
     mounted() {
